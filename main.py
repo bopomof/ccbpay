@@ -303,8 +303,8 @@ def page_change_password():
         ui.navigate.to('/')
         return
     ui.label('修改密码').classes('text-h5')
-    old = ui.input('旧密码', type='password')
-    new = ui.input('新密码', type='password')
+    old = ui.input('旧密码').props('type=password')
+    new = ui.input('新密码').props('type=password')
     def submit():
         db  = next(get_db())
         usr = db.get(User, u.id)
@@ -362,7 +362,7 @@ def page_manage_users():
         ('ordinary_merchant','普通商户')
     ], label='角色')
     uname = ui.input('用户名')
-    pwd   = ui.input('密码', type='password')
+    pwd   = ui.input('密码').props('type=password')
     pid   = ui.input('上级ID（可留空）')
     def add_user():
         db     = next(get_db())
