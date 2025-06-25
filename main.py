@@ -331,7 +331,8 @@ def page_config_key():
     key    = ui.input('银行密钥')
     def submit():
         db = next(get_db())
-        gm = db.get(User, int(sel.value))
+        raw = sel.value[0] if isinstance(sel.value, tuple) else sel.value
+        gm = db.get(User, int(raw))
         if gm:
             gm.bank_key = key.value
             db.commit()
