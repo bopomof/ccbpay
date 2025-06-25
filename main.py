@@ -264,16 +264,20 @@ def page_create_order():
     desc = ui.input('商品描述')
     def submit():
         db = next(get_db())
-        now = datetime.datetime.utcnow()
+        now = datetime.datetime.now(datetime.timezone.utc)
         ts = now.strftime('%Y%m%d%H%M%S') + f'{int(now.microsecond/1000):03d}'
         sn = ''.join(random.choices(string.ascii_letters + string.digits, k=32))
         pon= ''.join(random.choices(string.ascii_letters + string.digits, k=40))
+
+        pm_value = pm.value[0] if isinstance(pm.value, tuple) else pm.value
+        ot_value = ot.value[0] if isinstance(ot.value, tuple) else ot.value
+
         order = Order(
             timestamp_str=ts,
             serial_number=sn,
             product_order_number=pon,
-            payment_method=pm.value,
-            order_type=ot.value,
+            payment_method = pm_value,
+            order_type = ot_value,
             total_order_amount=float(amt.value),
             total_transaction_amount=float(ta.value),
             product_description=desc.value,
