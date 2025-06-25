@@ -252,11 +252,15 @@ def page_create_order():
         ui.navigate.to('/dashboard')
         return
     ui.label('生成支付订单').classes('text-h5')
-    pm   = ui.select([('07','聚合二维码'),('09','扫码扣款')], value='07', label='支付方式')
-    ot   = ui.select([('02','消费券'),('03','在途订单'),('04','普通订单')],
-                     value='04', label='订单类型')
-    amt  = ui.input('订单总金额', type='number', value='0')
-    ta   = ui.input('交易总金额', type='number', value='0')
+
+    pm = ui.select([('07','聚合二维码'), ('09','扫码扣款')], label='支付方式')
+    pm.value = '07'
+
+    ot = ui.select([('02','消费券'), ('03','在途订单'), ('04','普通订单')], label='订单类型')
+    ot.value = '04'
+
+    amt = ui.input('订单总金额', value='0').props('type=number')
+    ta  = ui.input('交易总金额', value='0').props('type=number')
     desc = ui.input('商品描述')
     def submit():
         db = next(get_db())
