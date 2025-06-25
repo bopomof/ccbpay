@@ -367,10 +367,11 @@ def page_manage_users():
     def add_user():
         db     = next(get_db())
         parent = int(pid.value) if pid.value.isdigit() else None
+        role_value = rsel.value[0] if isinstance(rsel.value, tuple) else rsel.value
         db.add(User(
             username      = uname.value,
             password_hash = get_password_hash(pwd.value),
-            role          = rsel.value,
+            role          = role_value,
             parent_id     = parent
         ))
         db.commit()
